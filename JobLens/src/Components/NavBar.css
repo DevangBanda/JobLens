@@ -1,0 +1,33 @@
+.nav_div{
+    margin-top: 10px;
+    display: flex;
+    height: 100px;
+    width: 100vw;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 2px solid #1acb6a;
+    box-shadow: #1acb6a 0px 5px 15px;
+}
+.logo_div{
+    flex: 0 0 20%;
+}
+.navPages_div{
+    flex: 0 0 60%;
+}
+  
+img{
+    height: 80px;
+    margin-left: 80px;
+}
+.ulPages_div{
+    display: flex;
+    gap: 150px;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    font-size: 1.35rem;
+}
+ 
+.user_div{
+    flex: 0 0 20%;
+}
