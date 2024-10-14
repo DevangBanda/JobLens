@@ -61,8 +61,7 @@ const TextButton = styled.span`
 color: ${({theme}) => theme.component_text_primary};
 cursor: pointer;
 transition: all 0.3s ease;
-font-weight: 600;
-`;
+font-weight: 600;`;
 
 
 const Authentication = () => {

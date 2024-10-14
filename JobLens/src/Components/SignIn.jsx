@@ -1,8 +1,10 @@
-import React from 'react'; 
+import React, {useState} from 'react'; 
 import styled from 'styled-components';
 import UserInput from './UserInput';
 import Button from './Button'
-
+import {userSignIn} from "../../api/app";
+import {useDispatch} from "react-redux";
+import { loginSuccess } from '../Redux/Reducers/userSlice';
 
 const Container = styled.div`
 max-width: 500px;
@@ -10,22 +12,40 @@ display: flex;
 flex-direction: column;
 gap: 36px;
 align-items: center;
-width: 100%;
-`
-;
+width: 100%;`;
+
 const Title = styled.h1`  
 font-size: 30px;
 font-weight: 800;
-color: #0800f4;
-`;
+color: #0800f4;`;
 
 const Span = styled.span`  
 font-size: 16px;
 font-weight: 400;
-color: black;
-`;
+color: black;`;
 
 const SignIn = () => {
+
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+
+    const handleSignIn = async() => {
+        console.log("button");
+        await userSignIn({email, password})
+            .then((res) =>{
+                dispatch(loginSuccess(res.data));
+                alert("Login Success");
+            })
+            .catch((error) => {
+                alert(err.response.data.message);
+            });
+    };
+
+
+
+
   return (
     <Container>
         <div style={{display:"flex", alignItems:"center", width: "100%", flexDirection:"column", gap: "15px"}}>
@@ -41,14 +61,19 @@ const SignIn = () => {
         <UserInput 
             name="Email Address" 
             Placeholder="Enter Your Email Address"
+            value={email}
+            handleChange={(e) => setEmail(e.target.value)}
         />
         
         <UserInput 
             name="Password" 
             Placeholder="Enter your password"
+            password
+            value={password}
+            handleChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button text="Sign In"></Button>
+        <Button onClick={(e) => handleSignIn(e)} text="Sign In"></Button>
 
         
         </div>

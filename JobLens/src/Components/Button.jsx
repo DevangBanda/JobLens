@@ -10,10 +10,10 @@ color: white;
 font-weight: bold;`;
 
 const Button = (props) => {
-    const {text} = props;
+    const {text, onClick} = props;
 
   return (
-    <Container>
+    <Container onClick={(e) => onClick(e.target.value)}>
        {text}
     </Container>
   )
