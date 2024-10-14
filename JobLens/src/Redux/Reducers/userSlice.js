@@ -9,7 +9,7 @@ export const userSlice = createSlice({
     initialState,
     reducers:{
         loginSuccess: (state, action) => {
-            state.currentUser = action.payload.user;
+            state.currentUser = action.payload.existingUser;
             localStorage.setItem("joblens-app-token", action.payload.token);
         },
         logout: (state) => {

@@ -14,12 +14,12 @@ const UserInput = (props) => {
     const [showPassword, setShowPassword] = useState(false);
   return (
     <InputDiv>
-        <label style={{color:"black"}}>{name}</label>
-        <div style={{width: "80%", display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <label style={{color:"black", width:"100%"}}>{name}</label>
+        <div style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center", gap:"10px"}}>
         <input value={value} onChange={(e) => handleChange(e)} placeholder={Placeholder} 
                 id={name} 
                 type={password && !showPassword ? "password" : "text"} 
-                style={{backgroundColor: "#d8d8d8", 
+                style={{backgroundColor: "#f1f1f1", 
                         borderRadius: "6px", 
                         height: "30px",
                         width: "90%", 

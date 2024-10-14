@@ -16,23 +16,28 @@ background-color: white;
 overflow: hidden;`;
 
 const LeftDiv = styled.div`
-flex: 1;
+flex: 0.8;
 position: relative;
 margin: none;
+flex-shrink: 1;
 @media(max-width: 600px){
-visi}
+display: none;}
 `;
 
 const Image = styled.img`
 height: 100%;
 width: 100%;
+margin: 0;
 object-fit: cover;`;
 
 
 const RightDiv = styled.div`
 flex: 1;
 display: flex;
+flex-shrink: 1;
+width: 100%;
 flex-direction: column;
+position: relative;
 padding: 40px;
 gap: 16px;
 align-items: center;

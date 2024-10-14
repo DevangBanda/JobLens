@@ -39,7 +39,7 @@ const SignUp = () => {
                 alert("Account Created Success");
             })
             .catch((error) =>{
-                alert(err.response.data.message);
+                alert(error.response.data.message);
             })
     }
 

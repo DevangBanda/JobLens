@@ -32,22 +32,21 @@ const SignIn = () => {
 
 
     const handleSignIn = async() => {
-        console.log("button");
         await userSignIn({email, password})
             .then((res) =>{
+                console.log(res);
                 dispatch(loginSuccess(res.data));
                 alert("Login Success");
             })
             .catch((error) => {
-                alert(err.response.data.message);
+                alert(error.response.data.message);
             });
     };
 
-
-
-
   return (
+
     <Container>
+
         <div style={{display:"flex", alignItems:"center", width: "100%", flexDirection:"column", gap: "15px"}}>
             <Title>Welcome to JobLens</Title>
             <Span>Please Login with your credentials</Span>
@@ -74,10 +73,7 @@ const SignIn = () => {
         />
 
         <Button onClick={(e) => handleSignIn(e)} text="Sign In"></Button>
-
-        
         </div>
-        
         </div>
 
 
