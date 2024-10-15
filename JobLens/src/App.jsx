@@ -7,19 +7,29 @@ import Authentication from './Pages/Authentication';
 import { ThemeProvider } from 'styled-components';
 import {darkTheme} from './Utils/themes';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 function App() {
+
 
     // const [currentUser, setCurrentuser] = useState(false);
     const {currentUser} = useSelector((state) => state.user);
     
+
+    const MainDiv = styled.div`
+        height: 100vh;
+        width: 100vw;
+        background-color: rgb(255,255,255, 0.3);
+        `;
+
     return(
         <ThemeProvider theme={darkTheme}>
-            <div className = "main_div">
+            <MainDiv>
                 {currentUser ? 
                 <Dashboard></Dashboard>:
                 <Authentication></Authentication>
     }           
-            </div>
+            </MainDiv>
         </ThemeProvider>
     )
  }
