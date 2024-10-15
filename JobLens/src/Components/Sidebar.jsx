@@ -64,7 +64,7 @@ const Sidebar = () => {
                     key={index}
                     text={option.text}
                     link={option.link}
-                    isActive={activeIndex === index}
+                    isactive={activeIndex === index}
                     onClick={() => handleOptionsClick(index)}
                 />
             ))}

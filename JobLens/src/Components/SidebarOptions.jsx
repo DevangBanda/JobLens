@@ -19,18 +19,18 @@ width: 90%;
     color: white;
   }
 
-${({ isActive, theme }) =>
-    isActive && `
+${({ isactive, theme }) =>
+  isactive && `
     background-color: #352bc5; 
     color: white;
 `}
 `;
 
 const SidebarOptions = (props) => {
-    const {text, link, isActive, onClick} = props;
+    const {text, link, isactive, onClick} = props;
     
   return (
-    <ListItem isActive={isActive} onClick={onClick}>
+    <ListItem isactive={isactive} onClick={onClick}>
        {link} {text}
     </ListItem>
   )

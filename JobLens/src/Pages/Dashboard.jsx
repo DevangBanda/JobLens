@@ -116,43 +116,29 @@ border-radius: 20px;
 const Dashboard = () => {
 
   const fileInputRef = useRef(null);
-  // const [File, setFile] = useState([]);
 
   const handleBtnClick = (e) => {
     fileInputRef.current.click(); //Triggers click of input
   }
   const [files, setFiles] = useState([]);
-  const [images, setImages] = useState([]);
   const changeFiles = (e) => {
     setFiles(e.target.files);
   };
 
-  const uploadFiles = async (e) => {
+  const uploadFiles = async(e) => {
     e.preventDefault();
     const formData = new FormData();
     for (const file of files) {
       formData.append("photos", file);
     }
 
-    await jobDescUpload((formData))
-    //     .then((res) => {
-
-    //     })
-
-    // axios
-    //   .post("http://localhost:5100/files", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
+    await jobDescUpload(formData)
       .then((response) => {
-        console.log("response", response);
+        console.log("response", response.data);
         const filenames = response.data.files.map((file) => file.filename);
-        setImages(filenames);
       });
   };
-
-
+  
   return (
     <>
       <BodyDiv>
