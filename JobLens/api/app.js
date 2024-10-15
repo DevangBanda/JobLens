@@ -7,4 +7,11 @@ const API = axios.create({
 export const userSignIn = async(data) => API.post("/user/signIn", data);
 export const userSignUp = async(data) => API.post("/user/signUp", data);
 
+
+export const jobDescUpload = async(formData) => {console.log(formData); API.post("/user/dashboard/jobUpload/", formData, {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+})};
+  
 export default API;

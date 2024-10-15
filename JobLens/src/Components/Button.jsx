@@ -1,21 +1,21 @@
 import React from 'react'; 
 import styled from 'styled-components';
 
-const Container = styled.button`
+const BTN = styled.button`
 width: 80%;
 margin: auto;
 background-color: ${({theme}) => theme.component_text_primary}; 
-
 color: white;
-font-weight: bold;`;
+font-weight: bold;`
+;
 
 const Button = (props) => {
     const {text, onClick} = props;
 
   return (
-    <Container onClick={(e) => onClick(e.target.value)}>
+    <BTN onClick={(e) => onClick(e.target.value)}>
        {text}
-    </Container>
+    </BTN>
   )
 }
 

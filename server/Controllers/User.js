@@ -65,3 +65,7 @@ export const signUp = async(req, res, next) =>
             return next(error);
         }
     }
+ 
+export const jobDescUpload = async(req,res,next) => {
+    res.status(200).json({ files: req.files });
+}
