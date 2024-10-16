@@ -75,12 +75,14 @@ export const jobDescUpload = async(req,res,next) => {
     // const text = await mammoth.extractRawText({path: "/uploads"})
     const filePath = req.file.path;
     const result = await mammoth.extractRawText({ path: filePath });
-    console.log(result.value);
+    //console.log(result.value);
 
-    run("Assume you are an expert when it comes to hiring, job description analysis. I am providing you with a job description." + 
+    const answer = await run("Assume you are an expert when it comes to hiring, job description analysis. I am providing you with a job description." + 
         "FIgure out the name of the role by yourself" + 
         "Give me 10 technical and 10 non-technical that interviewer can ask me based on the job description." + 
-        result.value); 
-    
-    res.status(200).json({ files: req.files });
+        result.value);
+
+    console.log(answer);
+    res.status(200).json(answer);
+    // res.status(200).json({ files: req.files });
 }
