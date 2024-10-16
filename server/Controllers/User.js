@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import user from "../Models/user.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import mammoth from "mammoth";
+import { run } from "../GeminiAPI.js";
 
 dotenv.config();
 
@@ -67,5 +69,18 @@ export const signUp = async(req, res, next) =>
     }
  
 export const jobDescUpload = async(req,res,next) => {
+
+    //Once we have the file saved, we can use mammoth or pdf-parse to 
+    //extract the raw text from it for NLP analysis. We use mammoth package to achieve this.
+    // const text = await mammoth.extractRawText({path: "/uploads"})
+    const filePath = req.file.path;
+    const result = await mammoth.extractRawText({ path: filePath });
+    console.log(result.value);
+
+    run("Assume you are an expert when it comes to hiring, job description analysis. I am providing you with a job description." + 
+        "FIgure out the name of the role by yourself" + 
+        "Give me 10 technical and 10 non-technical that interviewer can ask me based on the job description." + 
+        result.value); 
+    
     res.status(200).json({ files: req.files });
 }

@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
       cb(null, process.cwd() + "/uploads");
     },
     filename: (req, file, cb) => {
-      cb(null, /*file.originalname*/ Date.now() + path.extname(file.originalname));
+      cb(null, "JobDescription" + path.extname(file.originalname));/*file.originalname Date.now() + path.extname(file.originalname));*/
     },
   });
 
@@ -18,6 +18,6 @@ const upload = multer({storage});
 
 router.post('/signUp/', signUp);
 router.post('/signIn/', signIn);
-router.post("/dashboard/jobUpload/", upload.array("photos"), jobDescUpload);
+router.post("/dashboard/jobUpload/", upload.single("file"), jobDescUpload);
 
 export default router;

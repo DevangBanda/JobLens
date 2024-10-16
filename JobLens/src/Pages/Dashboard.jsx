@@ -129,7 +129,7 @@ const Dashboard = () => {
     e.preventDefault();
     const formData = new FormData();
     for (const file of files) {
-      formData.append("photos", file);
+      formData.append("file", file);
     }
 
     await jobDescUpload(formData)
