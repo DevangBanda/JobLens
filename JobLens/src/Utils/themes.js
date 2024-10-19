@@ -1,6 +1,6 @@
 export const darkTheme = {
     //DashBoard
-    top_primary: "rgba(255, 255, 255, 0.03)",
+    top_primary: "#3F3F3F",
     top_text_primary: "rgb(226, 240, 245)",
     
 

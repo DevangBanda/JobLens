@@ -1,11 +1,12 @@
-import React, {useRef, useState} from 'react'; 
+import React, {useEffect, useRef, useState} from 'react'; 
 import Navbar from '../Components/Navbar';
 import styled from 'styled-components';
 import Sidebar from '../Components/Sidebar';
 import Button from '../Components/Button';
 import AddIcon from '@mui/icons-material/Add';
 import {jobDescUpload} from "../../api/app";
-import axios from 'axios';
+import axios, { formToJSON } from 'axios';
+import useSpeechRecognition from '../Hooks/useSpeechRecoginitionHook';
 
 const BodyDiv = styled.div`
 height: 100vh;
@@ -14,7 +15,7 @@ display: flex;
 align-items: center;
 flex-direction: column;
 gap: 20px;
-background-color: black;
+background-color: #000000;
 color: white;
 height: 100vh;
 `;
@@ -24,18 +25,10 @@ flex: 1;
 display: flex;
 align-items: center;
 justify-content: center; 
-background-color: "inherit";
-color: ${({theme}) => theme.top_text_primary};
 margin: 20px 20px;
 gap:15px;
 width: 90%;
 `;
-
-
-const NavBar = styled(Navbar)`
-flex: 0.2;
-`;
-
 
 //Main Dash Bar
 const Dash = styled.div`
@@ -56,9 +49,6 @@ display: flex;
 flex-direction: row;
 flex: 1;
 justify-content: space-around;`;
-
-
-
 
 const JobDescDiv = styled.div`
 flex: 1;
@@ -115,11 +105,20 @@ border-radius: 20px;
 
 const Dashboard = () => {
 
-  const fileInputRef = useRef(null);
+  let outputRef = useRef(null);
+  const [outText, setOutText] = useState("");
+  
+  const {text, 
+        isListening, 
+        startListening, 
+        stopListening,
+        finalText,
+        isFinal,
+        hasRecognitionSupport} = useSpeechRecognition();
 
-  const handleBtnClick = (e) => {
-    fileInputRef.current.click(); //Triggers click of input
-  }
+  // const handleBtnClick = (e) => {
+  //   fileInputRef.current.click(); //Triggers click of input
+  // }
   const [files, setFiles] = useState([]);
   const changeFiles = (e) => {
     setFiles(e.target.files);
@@ -132,17 +131,40 @@ const Dashboard = () => {
       formData.append("file", file);
     }
 
+    //If the Form Data is not empty, send the request to the server
+    if(!formData.entries().next().done){
     await jobDescUpload(formData)
       .then((response) => {
-        console.log("response", response.data);
-        const filenames = response.data.files.map((file) => file.filename);
+        console.log("response: \n", response.data);
+        // const filenames = response.data.files.map((file) => file.filename);
       });
+    }
+
+    else(window.alert("Please choose a file first"));
   };
+
+  const handleSpeechClick = () => {
+    console.log("btn");
+    startListening();
+  }
+
+  const handleSpeechStopClick = () => {
+     console.log("btnStop");
+    console.log(text);
+      stopListening();
+  };
+
+  useEffect(() => {
+    outputRef.current = text;
+    if(isFinal){
+      outputRef.current = "";
+      console.log("bird");
+    }
+  }, [text, isFinal]);
   
   return (
     <>
       <BodyDiv>
-        <NavBar></NavBar>
   
         <Main>
           <Sidebar/>
@@ -172,10 +194,24 @@ const Dashboard = () => {
             <Row>
               <JobDescDiv>
               <h1>Metrics? </h1>
+              <button onClick={() => {handleSpeechClick()}}>Start</button>
+
+              {hasRecognitionSupport ? 
+              (<h1>Yes Support</h1>) :
+              (<h1>No Support </h1>)}
+
+              {isListening ? 
+              (<p>recording</p>):
+              (<p>not recording</p>)}
+              
+              {text}
+
+              <button onClick={() => {handleSpeechStopClick()}}>Start</button>
+
               </JobDescDiv>
               
               <QuestionsDiv>
-                  
+                {isFinal ? finalText: (finalText + outputRef.current)}
               </QuestionsDiv>
             </Row>
 
