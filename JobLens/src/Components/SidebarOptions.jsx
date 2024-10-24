@@ -1,7 +1,6 @@
 import React, { isValidElement } from 'react';
 import styled from 'styled-components';
 
-
 const ListItem = styled.li`
 display: flex;
 gap: 12px;
@@ -20,17 +19,20 @@ width: 90%;
   }
 
 ${({ isactive, theme }) =>
-  isactive && `
-    background-color: #352bc5; 
-    color: white;
-`}
+  
+  isactive ? `background-color: #352bc5; color: white;` : ``
+
+  // isactive && `
+  //   background-color: #352bc5; 
+  //   color: white;`
+  }
 `;
 
 const SidebarOptions = (props) => {
     const {text, link, isactive, onClick} = props;
     
   return (
-    <ListItem isactive={isactive} onClick={onClick}>
+    <ListItem isactive={isactive || undefined} onClick={onClick}>
        {link} {text}
     </ListItem>
   )

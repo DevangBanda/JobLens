@@ -105,7 +105,7 @@ border-radius: 20px;
 
 const Dashboard = () => {
 
-  let outputRef = useRef(null);
+  let outputRef = useRef();
   const [outText, setOutText] = useState("");
   
   const {text, 
