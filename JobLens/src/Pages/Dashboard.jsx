@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'; 
+import React, {useCallback, useEffect, useRef, useState} from 'react'; 
 import Navbar from '../Components/Navbar';
 import styled from 'styled-components';
 import Sidebar from '../Components/Sidebar';
@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import {jobDescUpload} from "../../api/app";
 import axios, { formToJSON } from 'axios';
 import useSpeechRecognition from '../Hooks/useSpeechRecoginitionHook';
+import WebcamStream from '../Components/WebcamStream';
+import { useEventCallback } from '@mui/material';
 
 const BodyDiv = styled.div`
 height: 100vh;
@@ -107,6 +109,8 @@ const Dashboard = () => {
 
   let outputRef = useRef();
   const [outText, setOutText] = useState("");
+  console.log("render");
+  const [captureVid, setCaptureVid] = useState(false);
   
   const {text, 
         isListening, 
@@ -154,6 +158,10 @@ const Dashboard = () => {
       stopListening();
   };
 
+  const handleClick = useCallback(() => {
+
+  });
+
   useEffect(() => {
     outputRef.current = text;
     if(isFinal){
@@ -182,12 +190,17 @@ const Dashboard = () => {
                   </form>
                 </Top>
 
-              
+              <button onClick = {useCallback(() => setCaptureVid(!captureVid))}></button>
 
               </JobDescDiv>
               
               <QuestionsDiv>
-                
+              
+                {captureVid ? 
+                (<WebcamStream/>):
+                (<></>)
+
+                }   
               </QuestionsDiv>
             </Row>
 
