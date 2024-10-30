@@ -14,7 +14,6 @@ const Camera = styled.div``;
 const CameraButton = styled.button``; 
 
 const WebcamStream = () => {
-  console.log("render Component");
   
   const webcamref = useRef(null); 
   const mediaRecorderRef = useRef(null);
@@ -25,8 +24,8 @@ const WebcamStream = () => {
     setCapturing(true);
     
     const options = {
-      audio: true,
-      audioBitsPerSecond: 2500000,
+
+      audioBitsPerSecond: 128000,
       videoBitsPerSecond: 2500000,
       mimeType: "video/mp4; codecs=vp9,opus",
     };
@@ -40,9 +39,7 @@ const WebcamStream = () => {
       );
 
       mediaRecorderRef.current.start();
-      console.log("Recording started:", mediaRecorderRef.current);
     } catch(error) {
-      console.log("Error starting stream:", error);
     }
   }, [setCapturing]);
 
@@ -50,14 +47,12 @@ const WebcamStream = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setCapturing(false);
-      console.log("Recording stopped");
     }
   }, []);
 
   const handleDataAvailable = useCallback((event) => {
     if (event.data && event.data.size > 0) {
       setRecordedChunks((prevChunks) => [...prevChunks, event.data]);
-      console.log("Data available:", event.data);
     }
   }, []);
 
@@ -78,7 +73,15 @@ const WebcamStream = () => {
 
   return (
     <Container>
-      <Webcam audio={true} ref={webcamref} />
+      <Webcam    muted={true}     audio={true}
+        audioConstraints={{
+          sampleSize: 8,
+          echoCancellation: true,
+          suppressLocalAudioPlayback: true,
+          noiseSuppression: true
+        }} 
+
+        ref={webcamref} />
       {capturing ? (
         <CameraButton onClick={handleStopStream}>Stop Capture</CameraButton>
       ) : (
