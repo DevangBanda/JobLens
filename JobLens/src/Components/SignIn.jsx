@@ -53,7 +53,7 @@ const SignIn = () => {
         <div style={{
           display: "flex",
           width: "100%", 
-          gap: "20px",
+          gap: "10px",
           flexDirection: "column",
         }}>
 
