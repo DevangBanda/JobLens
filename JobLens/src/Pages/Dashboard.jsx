@@ -112,6 +112,7 @@ const Dashboard = () => {
   console.log("render");
   const [captureVid, setCaptureVid] = useState(false);
   
+  //Speech Recognition custom hook
   const {text, 
         isListening, 
         startListening, 
