@@ -36,6 +36,7 @@ const SignIn = () => {
             .then((res) =>{
                 console.log(res);
                 dispatch(loginSuccess(res.data));
+                console.log(res.data);
                 alert("Login Success");
             })
             .catch((error) => {

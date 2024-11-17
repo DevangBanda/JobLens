@@ -77,10 +77,13 @@ export const jobDescUpload = async(req,res,next) => {
     const result = await mammoth.extractRawText({ path: filePath });
     //console.log(result.value);
 
-    const answer = await run("Assume you are an expert when it comes to hiring, job description analysis. I am providing you with a job description." + 
-        "FIgure out the name of the role by yourself" + 
-        "Give me 10 technical and 10 non-technical that interviewer can ask me based on the job description." + 
-        result.value);
+    // const answer = await run("Assume you are an expert when it comes to hiring, job description analysis. I am providing you with a job description." + 
+    //     "FIgure out the name of the role by yourself" + 
+    //     "Give me 5 technical and 10 non-technical that interviewer can ask me based on the job description." + 
+    //     result.value);
+
+
+    const answer = await run("Give me what doctor specialities that deal with exzema. GIve me just the speciality names without stars please or bullets.");
 
     console.log(answer);
     res.status(200).json(answer);

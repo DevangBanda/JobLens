@@ -2,7 +2,7 @@ import express from "express";
 import { signIn, signUp, jobDescUpload} from "../Controllers/User.js";
 import multer from "multer";
 import path from "path";
-import AWS from "aws-sdk";
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -13,9 +13,6 @@ const storage = multer.diskStorage({
     },
   });
 
-AWS.config.update({
-
-});
 
 const router = express.Router();
 

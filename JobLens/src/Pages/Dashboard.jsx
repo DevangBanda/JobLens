@@ -9,6 +9,8 @@ import axios, { formToJSON } from 'axios';
 import useSpeechRecognition from '../Hooks/useSpeechRecoginitionHook';
 import WebcamStream from '../Components/WebcamStream';
 import { useEventCallback } from '@mui/material';
+import useMicrophoneStream from '../Hooks/useMicrophoneStream';
+import useAwsHook from '../Hooks/useAwsHook';
 
 const BodyDiv = styled.div`
 height: 100vh;
@@ -121,6 +123,19 @@ const Dashboard = () => {
         isFinal,
         hasRecognitionSupport} = useSpeechRecognition();
 
+  const {transcription, recording, startRecording, stopRecording } = useAwsHook();
+  // const { isRecording, audioBlob, startRecording, stopRecording } = useMediaRecorder();
+  const { startMicStream, stopMicStream, audioFormat } = useMicrophoneStream();
+
+  const handlePlayback = () => {
+    if (audioBlob) {
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  };
+ 
+ 
   // const handleBtnClick = (e) => {
   //   fileInputRef.current.click(); //Triggers click of input
   // }
@@ -196,7 +211,7 @@ const Dashboard = () => {
               </JobDescDiv>
               
               <QuestionsDiv>
-              
+              <button onClick = {useCallback(() => setCaptureVid(!captureVid))}></button>
                 {captureVid ? 
                 (<WebcamStream/>):
                 (<></>)
@@ -208,7 +223,7 @@ const Dashboard = () => {
             <Row>
               <JobDescDiv>
               <h1>Metrics? </h1>
-              <button onClick={() => {handleSpeechClick()}}>Start</button>
+              {/* <button onClick={() => {handleSpeechClick()}}>Start</button>
 
               {hasRecognitionSupport ? 
               (<h1>Yes Support</h1>) :
@@ -220,8 +235,36 @@ const Dashboard = () => {
               
               {text}
 
-              <button onClick={() => {handleSpeechStopClick()}}>Start</button>
+              <button onClick={() => {handleSpeechStopClick()}}>Start</button> */}
+                          {/* <button onClick={isRecording ? stopRecording : startRecording}>
+        {isRecording ? 'Stop Recording' : 'Start Recording'}
+      </button>
+      {audioBlob && (
+        <div>
+          <h2>Recorded Audio:</h2>
+          <button onClick={handlePlayback}>Play Recorded Audio</button>
+        </div>
+      )} */}
 
+{/* <button onClick={startMicStream}>Start Microphone</button>
+      <button onClick={stopMicStream}>Stop Microphone</button>
+
+      {audioFormat && (
+        <div>
+          <p>Audio Format:</p>
+          <pre>{JSON.stringify(audioFormat, null, 2)}</pre>
+        </div>
+      )} */}
+
+    <button onClick={startRecording} >Start Recording
+       </button>
+      <button onClick={stopRecording}>
+        Stop Recording
+      </button>
+      <div>
+        <h2>Transcription:</h2>
+        <p>{transcription}</p>
+      </div>
               </JobDescDiv>
               
               <QuestionsDiv>

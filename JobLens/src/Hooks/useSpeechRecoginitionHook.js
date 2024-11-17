@@ -5,12 +5,9 @@ import React, {useEffect, useState, useRef} from 'react';
 
 //Browsers only support speech recog. with prefixed properties. This code allow for both prefixed and unprefixed
 //versions that may be supported
-
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
 const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
-
 
 
 //Grammar that our app can recognize
@@ -52,7 +49,6 @@ const useSpeechRecognition = () => {
             console.log(event.results);
             const length = event.results.length;
             setText((prevText) => event.results[length-1][0].transcript);
-            // console.log(event.results[length-1][0].isFinal);
             SetIsFinal(false);
             if(event.results[length-1].isFinal)
             {
