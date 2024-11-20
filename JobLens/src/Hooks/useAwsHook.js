@@ -20,14 +20,7 @@ const useAwsHook = () => {
     const AWS_REGION = import.meta.env.VITE_AWS_REGION;
     const AWS_ACCESS_KEY_ID =  import.meta.env.VITE_AWS_ACCESS_KEY_ID;
     const AWS_SECRET_ACCESS_KEY =  import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
-    
-    // useEffect(() => {
-
-    //     const AWS_REGION = import.meta.env.VITE_AWS_REGION;
-    //     const AWS_ACCESS_KEY_ID =  import.meta.env.VITE_AWS_ACCESS_KEY;
-    //     const AWS_SECRET_ACCESS_KEY =  import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
-
-    // }, []);
+  
 
     const createMicrophoneStream = async () => {
         microphoneStream.current = new MicrophoneStream();
