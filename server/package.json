@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.697.0",
     "@google/generative-ai": "^0.21.0",
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",

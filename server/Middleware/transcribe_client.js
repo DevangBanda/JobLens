@@ -4,4 +4,3 @@ const transcribeClient = new TranscribeClient({region: REGION});
 export{transcribeClient};
 
 
-import AWS from aws-sdk;
