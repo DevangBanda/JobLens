@@ -11,6 +11,29 @@ import {
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
 
+
+
+
+
+class S3{
+  constructor(){
+    this.s3Client = new S3Client({});
+  }; 
+
+  async newBucket(){
+  // Create an Amazon S3 bucket. The epoch timestamp is appended
+  // to the name to make it unique.
+
+  const bucketName = `test-bucket-${Date.now()}`;
+  await this.s3Client.send(
+    new CreateBucketCommand({
+      Bucket: bucketName,
+    }),
+  );
+}; 
+
+}
+
 export async function main() {
   // A region and credentials can be declared explicitly. For example
   // `new S3Client({ region: 'us-east-1', credentials: {...} })` would
@@ -19,14 +42,7 @@ export async function main() {
   // are not defined here.
   const s3Client = new S3Client({});
 
-  // Create an Amazon S3 bucket. The epoch timestamp is appended
-  // to the name to make it unique.
-  const bucketName = `test-bucket-${Date.now()}`;
-  await s3Client.send(
-    new CreateBucketCommand({
-      Bucket: bucketName,
-    }),
-  );
+  newBucket(s3Client);
 
   // Put an object into an Amazon S3 bucket.
   await s3Client.send(
@@ -85,3 +101,5 @@ import { fileURLToPath } from "node:url";
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main();
 }
+
+export default S3;
