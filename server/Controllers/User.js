@@ -5,6 +5,9 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import mammoth from "mammoth";
 import { run } from "../GeminiAPI.js";
+import multer from "multer";
+import ffmpegPath from "ffmpeg-static";
+import Ffmpeg from "fluent-ffmpeg";
 
 dotenv.config();
 
@@ -88,4 +91,12 @@ export const jobDescUpload = async(req,res,next) => {
     console.log(answer);
     res.status(200).json(answer);
     // res.status(200).json({ files: req.files });
-}
+};
+
+export const mp3FileUpload = async(req, res, next) =>{
+    console.log("MP3 File received");
+
+    const filePath = req.file.path;
+    console.log(filePath);
+
+};

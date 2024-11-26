@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import Sidebar from '../Components/Sidebar';
 import Button from '../Components/Button';
 import AddIcon from '@mui/icons-material/Add';
-import {jobDescUpload} from "../../api/app";
+import {jobDescUpload, sendAudioFile} from "../../api/app";
 import axios, { formToJSON } from 'axios';
 import useSpeechRecognition from '../Hooks/useSpeechRecoginitionHook';
 import WebcamStream from '../Components/WebcamStream';
 import { useEventCallback } from '@mui/material';
 import useMicrophoneStream from '../Hooks/useMicrophoneStream';
 import useAwsHook from '../Hooks/useAwsHook';
+import useMicRecorderHook from '../Hooks/useMicRecorderHook';
 
 const BodyDiv = styled.div`
 height: 100vh;
@@ -123,6 +124,10 @@ const Dashboard = () => {
         isFinal,
         hasRecognitionSupport} = useSpeechRecognition();
 
+    const {
+      mp3File, startRec, stopRec
+    } = useMicRecorderHook();
+
   const {transcription, recording, startRecording, stopRecording } = useAwsHook();
   // const { isRecording, audioBlob, startRecording, stopRecording } = useMediaRecorder();
   const { startMicStream, stopMicStream, audioFormat } = useMicrophoneStream();
@@ -174,9 +179,16 @@ const Dashboard = () => {
       stopListening();
   };
 
-  const handleClick = useCallback(() => {
-    
-  });
+  const handleMP3StartRecClick = () => {
+    console.log("MP3Start");
+
+    startRec();
+  };
+
+  const handleMP3StopRecClick = () => {
+    console.log("MP3Stop");
+    stopRec();
+  };
 
   useEffect(() => {
     outputRef.current = text;
@@ -275,7 +287,9 @@ const Dashboard = () => {
           </Dash>
           
           <FeedBar>
-          <h1>FeedBack?</h1>
+          <button onClick={handleMP3StartRecClick}>START MP3</button>
+          <button onClick={handleMP3StopRecClick}>STOP MP3</button>
+
           </FeedBar>
 
         </Main>

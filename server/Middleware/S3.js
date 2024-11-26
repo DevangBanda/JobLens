@@ -31,8 +31,7 @@ class S3{
         await this.s3Client.send(
             new PutObjectCommand({
                 Bucket: bucketName,
-                Key: objName,
-                Body: "FileName"
+                Key: objName
             })
         )
     }
