@@ -114,6 +114,8 @@ const Dashboard = () => {
   const [outText, setOutText] = useState("");
   console.log("render");
   const [captureVid, setCaptureVid] = useState(false);
+
+  const [testFile, setTestFile] = useState(null);
   
   //Speech Recognition custom hook
   const {text, 
@@ -289,7 +291,15 @@ const Dashboard = () => {
           <FeedBar>
           <button onClick={handleMP3StartRecClick}>START MP3</button>
           <button onClick={handleMP3StopRecClick}>STOP MP3</button>
-
+          <ul id="playlist">
+          {mp3File.map((audioSrc, index) => (
+            <li key={index}>
+              <audio controls>
+                <source src={audioSrc} type="audio/mp3" />
+              </audio>
+            </li>
+          ))}
+        </ul>
           </FeedBar>
 
         </Main>

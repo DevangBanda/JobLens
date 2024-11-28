@@ -9,24 +9,25 @@ const storage = multer.diskStorage({
       cb(null, process.cwd() + "/uploads");
     },
     filename: (req, file, cb) => {
-      cb(null, path.extname(file.originalname));/*file.originalname Date.now() + path.extname(file.originalname));*/
+      cb(null, file.originalname  + path.extname(file.originalname));/*file.originalname Date.now() + path.extname(file.originalname));*/
     },
   });
 
-  const storageMP3 = multer.diskStorage({
+  const storage2 = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, process.cwd() + "/uploads3");
+      cb(null, process.cwd() + "/uploads");
     },
     filename: (req, file, cb) => {
-      cb(null, "MP3File" + path.extname(file.originalname));
+      cb(null, + path.extname(file.originalname));/*file.originalname Date.now() + path.extname(file.originalname));*/
     },
   });
+
 
 
 const router = express.Router();
 
 const upload = multer({storage});
-const uploadMP3 = multer({storageMP3});
+const upload2 = multer({storage2});
 
 router.post('/signUp/', signUp);
 router.post('/signIn/', signIn);

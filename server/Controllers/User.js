@@ -97,6 +97,13 @@ export const mp3FileUpload = async(req, res, next) =>{
     console.log("MP3 File received");
 
     const filePath = req.file.path;
-    console.log(filePath);
+    
+    Ffmpeg(filePath)
+    .audioCodec('libmp3lame');  // Use MP3 codec
+    
+    console.log("bird");
+
+
+
 
 };

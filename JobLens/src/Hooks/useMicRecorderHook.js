@@ -4,11 +4,11 @@ import {sendAudioFile} from '../../api/app.js';
 
 const useMicRecorderHook = () => {
 
-    const recorder = new MicRecorder({
+    const [recorder] = useState(new MicRecorder({
         bitRate: 128
-    });
+    }));
 
-    const [mp3File, setMp3File] = useState(null);
+    const [mp3File, setMp3File] = useState([]);
 
     const startRec = () => {
         // Start recording. Browser will request permission to use your microphone.
@@ -25,18 +25,20 @@ const useMicRecorderHook = () => {
         .getMp3().then(async([buffer, blob]) => {
             // do what ever you want with buffer and blob
             // Example: Create a mp3 file and play
+            console.log(buffer, blob);
             const file = new File(buffer, 'newAudioFile.mp3', {
                 type: blob.type,
                 lastModified: Date.now()
             });
 
-            setMp3File(file);
-            console.log(file);
+            const newAudioFile = URL.createObjectURL(file);
+            setMp3File((prevFiles) => [...prevFiles, newAudioFile]);
 
             const formData = new FormData();
             formData.append("audio", file);
 
-            
+            setMp3File(file);
+
             //If the Form Data is not empty, send the request to the server
             if ([...formData.entries()].length > 0) {
                 console.log("FormData contains:", [...formData.entries()])
