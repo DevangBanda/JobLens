@@ -127,7 +127,7 @@ const Dashboard = () => {
         hasRecognitionSupport} = useSpeechRecognition();
 
     const {
-      mp3File, startRec, stopRec
+      mp3File, startRec, stopRec, blobURL
     } = useMicRecorderHook();
 
   const {transcription, recording, startRecording, stopRecording } = useAwsHook();
@@ -194,6 +194,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     outputRef.current = text;
+    navigator.getUserMedia({audio: true}, 
+      ()=>{console.log('Granted');}, 
+      ()=>{console.log('Denied');}
+    ); 
     if(isFinal){
       outputRef.current = "";
       console.log("bird");
@@ -291,7 +295,7 @@ const Dashboard = () => {
           <FeedBar>
           <button onClick={handleMP3StartRecClick}>START MP3</button>
           <button onClick={handleMP3StopRecClick}>STOP MP3</button>
-          <ul id="playlist">
+          {/* <ul id="playlist">
           {mp3File.map((audioSrc, index) => (
             <li key={index}>
               <audio controls>
@@ -299,7 +303,15 @@ const Dashboard = () => {
               </audio>
             </li>
           ))}
-        </ul>
+                  </ul> */}
+
+          {blobURL && (
+        <audio controls>
+          <source src={blobURL} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      )}
+  
           </FeedBar>
 
         </Main>

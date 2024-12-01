@@ -33,9 +33,9 @@ mongoose
             })
             console.log("connected to the database ");
             
-            const s3_trial = new S3();
-            s3_trial.newBucket();
-            console.log("Done");
+            // const s3_trial = new S3();
+            // s3_trial.newBucket();
+            // console.log("Done");
         
 
         })

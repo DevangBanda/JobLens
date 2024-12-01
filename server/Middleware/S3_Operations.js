@@ -18,19 +18,42 @@ import {
 class S3{
   constructor(){
     this.s3Client = new S3Client({});
+    this.bucketName = `joblensproject`;
   }; 
 
   async newBucket(){
   // Create an Amazon S3 bucket. The epoch timestamp is appended
   // to the name to make it unique.
 
-  const bucketName = `test-bucket-${Date.now()}`;
+    // const bucketName = `test-bucket-${Date.now()}`;
+  const bucketName = `joblensproject`;
+    await this.s3Client.send(
+      new CreateBucketCommand({
+        Bucket: bucketName,
+      }),
+    );
+}; 
+
+async PutObjectDocument(file){
   await this.s3Client.send(
-    new CreateBucketCommand({
-      Bucket: bucketName,
+    new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: "file.docx",
+      Body: file,
     }),
   );
-}; 
+}
+
+async PutObjectAudio(file){
+  await this.s3Client.send(
+    new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: "audio.mp3",
+      Body: file,
+    }),
+  );
+}
+
 
 }
 

@@ -5,9 +5,20 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import mammoth from "mammoth";
 import { run } from "../GeminiAPI.js";
-import multer from "multer";
-import ffmpegPath from "ffmpeg-static";
-import Ffmpeg from "fluent-ffmpeg";
+import path from "path";
+import fs from 'fs';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+import AWS from "aws-sdk";
+import main from "../Middleware/S3_Operations.js";
+import S3 from "../Middleware/S3_Operations.js";
+
+// Get __dirname equivalent
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 dotenv.config();
 
@@ -95,15 +106,26 @@ export const jobDescUpload = async(req,res,next) => {
 
 export const mp3FileUpload = async(req, res, next) =>{
     console.log("MP3 File received");
-
-    const filePath = req.file.path;
     
-    Ffmpeg(filePath)
-    .audioCodec('libmp3lame');  // Use MP3 codec
+                
+    const s3_trial = new S3();
+    // s3_trial.newBucket();
+    // console.log("Done");
+
+    const audioFileName = 'audio.mp3'; // File name (you can dynamically choose this)
+    const audioFilePath = path.join(__dirname, '..', 'uploads', audioFileName); // Path to your .mp3 file
+
+    if (fs.existsSync(audioFilePath)) {
+        console.log("Exists");
+        s3_trial.PutObjectAudio(audioFilePath);
+    }
+
     
-    console.log("bird");
 
 
-
+    // const filePath = req.file.path;
+    
+    // Ffmpeg(filePath)
+    // .audioCodec('libmp3lame');  // Use MP3 codec
 
 };

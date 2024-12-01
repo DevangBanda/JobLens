@@ -4,8 +4,11 @@ import {sendAudioFile} from '../../api/app.js';
 
 const useMicRecorderHook = () => {
 
+    const [blobURL, setBlobURL] = useState(null);
+
     const [recorder] = useState(new MicRecorder({
-        bitRate: 128
+            bitRate: 64 ,
+    prefix: "data:audio/wav;base64,",
     }));
 
     const [mp3File, setMp3File] = useState([]);
@@ -25,7 +28,10 @@ const useMicRecorderHook = () => {
         .getMp3().then(async([buffer, blob]) => {
             // do what ever you want with buffer and blob
             // Example: Create a mp3 file and play
-            console.log(buffer, blob);
+
+            const blobURL = URL.createObjectURL(blob);
+            setBlobURL(blobURL);
+
             const file = new File(buffer, 'newAudioFile.mp3', {
                 type: blob.type,
                 lastModified: Date.now()
@@ -61,7 +67,7 @@ const useMicRecorderHook = () => {
 
     }
 
-    return {mp3File, startRec, stopRec};
+    return {mp3File, startRec, stopRec, blobURL};
 };
 
 export default useMicRecorderHook;
