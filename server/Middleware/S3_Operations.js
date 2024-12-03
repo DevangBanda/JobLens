@@ -9,6 +9,8 @@ import {
   DeleteBucketCommand,
   paginateListObjectsV2,
   GetObjectCommand,
+  ListBucketMetricsConfigurationsCommand,
+  ListBucketsCommand,
 } from "@aws-sdk/client-s3";
 
 
@@ -53,6 +55,15 @@ async PutObjectAudio(file){
     }),
   );
 }
+
+// async deleteBucket(bucketName){
+//   await this.s3Client.send(new DeleteBucketCommand({ Bucket: bucketName }));
+// }
+
+// async listBuckets(input){
+//   const command = new ListBucketsCommand(input);
+//   const res = await this.s3Client.send(command);
+// }
 
 
 }

@@ -11,6 +11,12 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+import { StartTranscriptionJobCommand } from "@aws-sdk/client-transcribe";
+// import { transcribeClient } from "../Middleware/transcribeClient.js";
+
+import {transcribeClient} from '../Middleware/transcribeClient.js';
+
+
 import AWS from "aws-sdk";
 import main from "../Middleware/S3_Operations.js";
 import S3 from "../Middleware/S3_Operations.js";
@@ -109,8 +115,8 @@ export const mp3FileUpload = async(req, res, next) =>{
     
                 
     const s3_trial = new S3();
-    // s3_trial.newBucket();
-    // console.log("Done");
+
+    // console.log(s3_trial.listBuckets(input));
 
     const audioFileName = 'audio.mp3'; // File name (you can dynamically choose this)
     const audioFilePath = path.join(__dirname, '..', 'uploads', audioFileName); // Path to your .mp3 file
@@ -120,12 +126,28 @@ export const mp3FileUpload = async(req, res, next) =>{
         s3_trial.PutObjectAudio(audioFilePath);
     }
 
-    
+     const params = {
+        TranscriptionJobName: "bird5",
+        LanguageCode: "en-US", // For example, 'en-US'
+        MediaFormat: "mp3", // For example, 'wav'
+        Media: {
+          MediaFileUri: "https://joblensproject.s3.ca-central-1.amazonaws.com/audio.mp3",
+          // For example, "https://transcribe-demo.s3-REGION.amazonaws.com/hello_world.wav"
+        },
+        OutputBucketName: "joblensproject",
+      };
+      
+   
 
+      try {
+        const data = await transcribeClient.send(
+          new StartTranscriptionJobCommand(params),
+        );
+        console.log("Success - put", data);
+        return data; // For unit tests.
+      } catch (err) {
+        console.log("Error", err);
+      }
 
-    // const filePath = req.file.path;
-    
-    // Ffmpeg(filePath)
-    // .audioCodec('libmp3lame');  // Use MP3 codec
 
 };
