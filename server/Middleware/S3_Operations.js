@@ -14,6 +14,10 @@ import {
 } from "@aws-sdk/client-s3";
 
 
+import { StartTranscriptionJobCommand } from "@aws-sdk/client-transcribe";
+// import { transcribeClient } from "../Middleware/transcribeClient.js";
+
+import {transcribeClient} from './transcribeClient.js';
 
 
 
@@ -44,6 +48,9 @@ async PutObjectDocument(file){
       Body: file,
     }),
   );
+
+
+
 }
 
 async PutObjectAudio(file){
@@ -54,6 +61,33 @@ async PutObjectAudio(file){
       Body: file,
     }),
   );
+
+  const params = {
+    TranscriptionJobName: "bird9",
+    LanguageCode: "en-US", // For example, 'en-US'
+    MediaFormat: "mp3", // For example, 'wav'
+    Media: {
+      MediaFileUri: "https://joblensproject.s3.ca-central-1.amazonaws.com/audio.mp3",
+      // For example, "https://transcribe-demo.s3-REGION.amazonaws.com/hello_world.wav"
+    },
+    OutputBucketName: "joblensproject",
+  };
+  
+
+
+  try {
+    console.log("Starting");
+    const data = await transcribeClient.send(
+      new StartTranscriptionJobCommand(params),
+    );
+    console.log("Success - put", data);
+    return data; // For unit tests.
+  } catch (err) {
+    console.log("Error", err);
+  }
+
+
+
 }
 
 // async deleteBucket(bucketName){
